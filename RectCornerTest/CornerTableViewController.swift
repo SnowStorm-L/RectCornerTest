@@ -38,14 +38,14 @@ class CornerTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let imageCell = tableView.dequeueReusableCell(withIdentifier: Identifier.cornerImageCell) as? CornerImageTableViewCell else { fatalError() }
-        imageCell.makeCorner()
+        
         return imageCell
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? CornerImageTableViewCell {
-        
-        }
+//        if let cell = cell as? CornerImageTableViewCell {
+//        
+//        }
     }
     
     deinit {

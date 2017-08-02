@@ -14,8 +14,18 @@ class CornerImageTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+    
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-        contentView.backgroundColor = UIColor.brown
+        contentView.layoutIfNeeded()
+        
+        imageViewCollection.forEach {
+            $0.addCorner(20, setRectCorner: .bottomLeft)
+        }
+        
     }
     
     
