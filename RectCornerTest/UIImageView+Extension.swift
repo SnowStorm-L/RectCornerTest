@@ -17,9 +17,9 @@ extension UIImageView {
     
     fileprivate var rectCorner: UIRectCorner? {
         get {
-            return objc_getAssociatedObject(self, Constact.imageRectCornerKey) as? UIRectCorner
+            return objc_getAssociatedObject(self, &Constact.imageRectCornerKey) as? UIRectCorner
         } set {
-            objc_setAssociatedObject(self, Constact.imageRectCornerKey, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+            objc_setAssociatedObject(self, &Constact.imageRectCornerKey, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
     }
     
@@ -32,17 +32,17 @@ extension UIImageView {
     }
     
     fileprivate struct Constact {
-        static var imageObserverRuntimeKey = UnsafePointer<Any>(bitPattern: "imageObserverRuntimeKey".hashValue)
-        static var imageRectCornerKey = UnsafePointer<Any>(bitPattern: "imageRectCornerKey".hashValue)
+        static var imageObserverRuntimeKey = "imageObserverRuntimeKey"
+        static var imageRectCornerKey = "imageRectCornerKey"
     }
     
     fileprivate func imageObserver() -> ImageObserver {
         
-        var imageObserver = objc_getAssociatedObject(self, Constact.imageObserverRuntimeKey) as? ImageObserver
+        var imageObserver = objc_getAssociatedObject(self, &Constact.imageObserverRuntimeKey) as? ImageObserver
         
         if imageObserver == nil {
             imageObserver = ImageObserver(imageView: self)
-            objc_setAssociatedObject(self, Constact.imageObserverRuntimeKey, imageObserver, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &Constact.imageObserverRuntimeKey, imageObserver, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
         
         if let cornerType = rectCorner {
@@ -58,21 +58,21 @@ fileprivate extension UIImage {
     
     fileprivate var hasCornerRadius: Bool? {
         get {
-            return objc_getAssociatedObject(self, Constact.cornerRuntimeKey) as? Bool
+            return objc_getAssociatedObject(self, &Constact.cornerRuntimeKey) as? Bool
         } set {
-            objc_setAssociatedObject(self, Constact.cornerRuntimeKey, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+            objc_setAssociatedObject(self, &Constact.cornerRuntimeKey, newValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
     }
     
     fileprivate struct Constact {
-        static var cornerRuntimeKey = UnsafePointer<Any>(bitPattern: "cornerRuntimeKey".hashValue)
+        static var cornerRuntimeKey = "cornerRuntimeKey"
     }
     
 }
 
 private class ImageObserver: NSObject {
     
-    dynamic fileprivate var originImageView: UIImageView?
+    @objc dynamic fileprivate var originImageView: UIImageView?
     
     fileprivate var originImage: UIImage?
     
